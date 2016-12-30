@@ -1,12 +1,20 @@
+"""
+Tkinter resources: 
+http://zetcode.com/gui/tkinter/introduction/
+https://github.com/siddharthasahu/P2P-chat-application
+https://docs.python.org/2/library/tkinter.html
+http://www.tkdocs.com/tutorial/grid.html
+"""
 
 import Tkinter as tk
-import logic
 
-class MyGUI():
+
+class GUI():
     
-    def __init__(self):
+    def __init__(self, logic):
+        self.logic = logic
         root = tk.Tk()  # main window
-        root.protocol('WM_DELETE_WINDOW', logic.stop)  # cross was clicked
+        root.protocol('WM_DELETE_WINDOW', self.logic.stop)  # cross was clicked
         root.title('Slackish')
         root.resizable(width=False, height=False)
         self.root = root
@@ -39,7 +47,7 @@ class MyGUI():
         # bottom row
         frame = tk.Frame(root)
         frame.grid(column=1, row=2, columnspan=2, sticky=tk.EW)
-        name_label = tk.Label(frame, text="John (CEO):")
+        name_label = tk.Label(frame, text="TODO: John (CEO):")  # TODO: from logic
         name_label.pack(side=tk.LEFT)
         self.entry = tk.Entry(frame, width=60)
         self.entry.pack(side=tk.LEFT)
@@ -47,11 +55,10 @@ class MyGUI():
         self.entry.bind('<Key>', lambda k: self._on_keypress(k))
         self.entry.focus_set()
         
-    def show_msg(self, txt, author=None):
+    def show_msg(self, txt, author, title):
         txtbox = self.chat_screen
         txtbox.config(state=tk.NORMAL)
-        if author:
-            txtbox.insert(tk.END, author + ': ')
+        txtbox.insert(tk.END, author + ' (' + title + ')' + ': ')
         txtbox.insert(tk.END, txt + '\n')
         txtbox.see(tk.END)
         txtbox.config(state=tk.DISABLED)
@@ -62,20 +69,10 @@ class MyGUI():
         if key.char in ('\n', '\r') or key.keycode == 2359309: 
             txt = self.entry.get()
             self.entry.delete(0, tk.END)
-            logic.i_say(txt)
+            self.logic.i_say(txt)
          
+    def update(self):
+        self.root.update()
+
     def kill(self):
         self.root.destroy()
-
-    
-
-my_gui = MyGUI()
-
-def update():
-    my_gui.root.update()
-
-def kill():
-    my_gui.kill()
-
-def show_msg(txt, author=None):
-    my_gui.show_msg(txt, author)

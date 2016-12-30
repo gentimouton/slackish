@@ -1,15 +1,13 @@
-"""
-Tkinter resources: 
-http://zetcode.com/gui/tkinter/introduction/
-https://github.com/siddharthasahu/P2P-chat-application
-https://docs.python.org/2/library/tkinter.html
-http://www.tkdocs.com/tutorial/grid.html
-"""
+from gui import GUI
+from logic import Logic
 
-import gui
-import logic
-  
+
 def run():
+    logic = Logic()
+    gui = GUI(logic)
+    logic.gui = gui
+    
+    logic.start()
     while not logic.game_over:
         logic.update()
         gui.update()
