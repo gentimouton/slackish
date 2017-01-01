@@ -1,3 +1,5 @@
+import time
+
 from gui import GUI
 from logic import Logic
 
@@ -5,11 +7,13 @@ from logic import Logic
 def run():
     logic = Logic()
     gui = GUI(logic)
-    logic.gui = gui
-    
-    logic.start()
+    logic.start(gui)
+    last_tick = time.time()
     while not logic.game_over:
-        logic.update()
+        now = time.time()
+        if now - last_tick >= 2:
+            logic.update()
+            last_tick = now
         gui.update()
     gui.kill()
 

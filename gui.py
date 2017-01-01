@@ -47,7 +47,8 @@ class GUI():
         # bottom row
         frame = tk.Frame(root)
         frame.grid(column=1, row=2, columnspan=2, sticky=tk.EW)
-        name_label = tk.Label(frame, text="TODO: John (CEO):")  # TODO: from logic
+        me = self.logic.get_stats()
+        name_label = tk.Label(frame, text=me['name'] + ' (' + me['title'] + '):')
         name_label.pack(side=tk.LEFT)
         self.entry = tk.Entry(frame, width=60)
         self.entry.pack(side=tk.LEFT)
@@ -55,10 +56,10 @@ class GUI():
         self.entry.bind('<Key>', lambda k: self._on_keypress(k))
         self.entry.focus_set()
         
-    def show_msg(self, txt, author, title):
+    def show_msg(self, txt, author_name, author_title):
         txtbox = self.chat_screen
         txtbox.config(state=tk.NORMAL)
-        txtbox.insert(tk.END, author + ' (' + title + ')' + ': ')
+        txtbox.insert(tk.END, author_name + ' (' + author_title + ')' + ': ')
         txtbox.insert(tk.END, txt + '\n')
         txtbox.see(tk.END)
         txtbox.config(state=tk.DISABLED)
