@@ -15,10 +15,12 @@ class Room():
         msg_dict = {'txt': txt, 'npc': npc}
         self.msg_queue.append(msg_dict)
         
-    def update(self):
+    def update(self, tick):
         for msg in self.msg_queue:
             txt = msg['txt']
             name = msg['npc'].name
             title = msg['npc'].title
             self.logic.gui.show_msg(txt, name, title)
+            self.chat_history.append(msg)
+            self.msg_queue = []
             
